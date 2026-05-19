@@ -1,4 +1,4 @@
-# PPTtool
+# PPT Semantic Search and Slide Recommendation Tool
 
 Local desktop tool that indexes PowerPoint (`.pptx`) slides semantically and helps you find or reuse slides from presentations you already have without using exact words written on the slides.
 
