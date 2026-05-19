@@ -1,6 +1,6 @@
 # PPTtool
 
-Local desktop tool that indexes PowerPoint (`.pptx`) slides semantically and helps you find or reuse slides from presentations you already have without usign exact words written on the slides.
+Local desktop tool that indexes PowerPoint (`.pptx`) slides semantically and helps you find or reuse slides from presentations you already have without using exact words written on the slides.
 
 For each slide, the pipeline extracts on-slide text and images, generates image captions, optionally summarizes very long text, builds embeddings, and stores them in a local vector database for search and slide recommendations.
 
