@@ -1,0 +1,27 @@
+# PPTtool Requirements
+# Core dependencies for PowerPoint processing and embeddings
+
+# PowerPoint processing
+python-pptx>=0.6.21
+
+# Image processing and captioning
+Pillow>=9.0.0
+transformers>=4.21.0
+torch>=1.12.0
+torchvision>=0.13.0
+
+# Vector database and embeddings
+chromadb>=0.4.0
+sentence-transformers>=2.2.0
+
+# Data processing
+numpy>=1.21.0
+pandas>=1.4.0
+
+# Web API
+flask>=2.0.0
+flask-cors>=3.0.0
+
+# Optional: For better performance
+# accelerate>=0.20.0  # For faster model loading
+# bitsandbytes>=0.39.0  # For memory-efficient model loading
