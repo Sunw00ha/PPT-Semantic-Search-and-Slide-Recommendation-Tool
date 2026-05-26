@@ -4,7 +4,9 @@ import torch
 from typing import Dict, List
 import os
 
-
+# Download Salesforce's pre-trained BLIP-2 model from HuggingFace and load it into memory so we can feed it images and get captions back
+# This is created as a class to allow us to store self.processor and self.model as instance variables
+# load them once and then use them for each image
 class Blip2ImageCaptioner:
     def __init__(self, model_name: str = "Salesforce/blip2-opt-2.7b"):
         """
@@ -13,7 +15,7 @@ class Blip2ImageCaptioner:
         Args:
             model_name: Name of the pre-trained BLIP-2 model to use
         """
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.device = "cpu"
         
         # Load model and processor
         self.processor = Blip2Processor.from_pretrained(model_name)
@@ -39,10 +41,11 @@ def generate_caption_for_image_blip2(image_path: str, captioner: Blip2ImageCapti
         image = Image.open(image_path).convert('RGB')
         
         # Prepare image for model
+        # The model cannot directly process JPEG/PNG. It needs to be converted into a specific number format
         inputs = captioner.processor(image, return_tensors="pt").to(captioner.device, captioner.model.dtype)
         
         # Generate caption
-        with torch.no_grad():
+        with torch.no_grad(): # skip tracking
             output_ids = captioner.model.generate(
                 **inputs,
                 max_length=50,
@@ -52,7 +55,7 @@ def generate_caption_for_image_blip2(image_path: str, captioner: Blip2ImageCapti
                 top_p=0.9
             )
         
-        # Decode the generated caption --> converting the output of the model into a string
+        # Decode the generated caption --> converting the number output of the model into a string
         caption = captioner.processor.batch_decode(output_ids, skip_special_tokens=True)[0].strip()
         
         return caption
