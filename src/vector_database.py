@@ -39,7 +39,9 @@ class PPTVectorDatabase:
             metadata={"description": "PowerPoint slide embeddings"}
         )
         
-        # File tracking
+        # File tracking — keeps a JSON record of which .pptx files have already been
+        # processed and when they were last modified. This avoids re-running the expensive
+        # pipeline (BLIP-2 captioning, summarization, embedding) on files that haven't changed.
         self.file_tracker_path = os.path.join(db_path, "file_tracker.json")
         self.file_tracker = self._load_file_tracker()
         
@@ -69,6 +71,7 @@ class PPTVectorDatabase:
             "file_path": file_path
         }
     
+    # If the file hasn't been modified since last time it was processed it will return False and skip the processing pipeline (BLIP-2 captioning, etc)
     def _needs_processing(self, file_path: str) -> bool:
         """Check if file needs to be processed (new or modified)."""
         if not os.path.exists(file_path):
