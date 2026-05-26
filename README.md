@@ -1,6 +1,6 @@
-# PPT Semantic Search and Slide Recommendation Tool
+# PPTtool
 
-Local desktop tool that indexes PowerPoint (`.pptx`) slides semantically and helps you find or reuse slides from presentations you already have without using exact words written on the slides.
+Local desktop tool that indexes PowerPoint (`.pptx`) slides semantically and helps you find or reuse slides from presentations you already have.
 
 For each slide, the pipeline extracts on-slide text and images, generates image captions, optionally summarizes very long text, builds embeddings, and stores them in a local vector database for search and slide recommendations.
 
@@ -51,7 +51,7 @@ Recommended way to use the project:
 
 ```bash
 source PPTenv/bin/activate
-python run_gui.py
+python3 run_gui.py
 ```
 
 In the app:
