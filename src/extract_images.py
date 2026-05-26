@@ -22,6 +22,7 @@ def extract_images_from_pptx(pptx_path: str, output_dir: str = None) -> Dict[int
         raise FileNotFoundError(f"PowerPoint file not found: {pptx_path}")
     
     # Create output directory if not provided
+    # images only need to exist temporarily for captioning and embedding tasks
     if output_dir is None:
         output_dir = tempfile.mkdtemp(prefix="pptx_images_")
     else:
@@ -34,16 +35,16 @@ def extract_images_from_pptx(pptx_path: str, output_dir: str = None) -> Dict[int
     
     slide_images = {}
     
-    for slide_num, slide in enumerate(prs.slides, start=1):
+    for slide_num, slide in enumerate(prs.slides, start=1): # iterate over every slide in deck
         image_paths = []
         image_count = 0
         
-        for shape in slide.shapes:
+        for shape in slide.shapes: # iterate over every shape in slide
             if hasattr(shape, 'image'):
                 try:
                     # Get image data
-                    image_data = shape.image.blob
-                    image_format = shape.image.ext
+                    image_data = shape.image.blob # returns raw binary bytes of image
+                    image_format = shape.image.ext # returns file extension of image (image gets saved in its original format)
                     
                     # Create filename
                     image_filename = f"slide_{slide_num}_image_{image_count + 1}.{image_format}"
