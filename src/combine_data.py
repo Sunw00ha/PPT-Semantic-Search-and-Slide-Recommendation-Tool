@@ -66,6 +66,7 @@ def combine_slide_text_and_captions(
     combined = {}
     slide_nums = sorted(set(slide_texts.keys()) | set(slide_captions.keys()))
 
+    # for eac slide in deck, get the text and captions
     for slide_num in slide_nums:
         text = slide_texts.get(slide_num, "").strip()
         captions = slide_captions.get(slide_num, [])
