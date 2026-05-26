@@ -28,6 +28,10 @@ class SlideEmbedder:
             Dictionary with slide data and embedding
         """
         # Combine text and captions into a single string for embedding
+        # example:
+            # if a slide has text "Sales Report Q3" and captions ["a bar chart showing sales data", "a company logo"],
+            # the content string will be "Sales Report Q3 a bar chart showing sales data a company logo"
+            # this string will be used to generate the embedding
         content_parts = []
         
         if slide_data['text']:
