@@ -3,6 +3,16 @@ from caption_images_blip2 import Blip2ImageCaptioner, caption_images_from_slides
 from typing import Dict, List
 import os
 
+_captioner_instance = None
+
+
+def _get_captioner() -> Blip2ImageCaptioner:
+    """Load the BLIP-2 model once and reuse it across all calls."""
+    global _captioner_instance
+    if _captioner_instance is None:
+        _captioner_instance = Blip2ImageCaptioner()
+    return _captioner_instance
+
 
 def run_image_captioning_pipeline_blip2(pptx_path: str) -> Dict[int, List[str]]:
     """
@@ -22,8 +32,8 @@ def run_image_captioning_pipeline_blip2(pptx_path: str) -> Dict[int, List[str]]:
     if not slide_images or not any(slide_images.values()):
         return {slide_num: [] for slide_num in slide_images}
     
-    # Step 2: Initialize BLIP-2 captioning model
-    captioner = Blip2ImageCaptioner()
+    # Step 2: Get BLIP-2 captioning model (loaded once, reused across files)
+    captioner = _get_captioner()
     
     # Step 3: Generate captions for all images
     slide_captions = caption_images_from_slides_blip2(slide_images, captioner)
