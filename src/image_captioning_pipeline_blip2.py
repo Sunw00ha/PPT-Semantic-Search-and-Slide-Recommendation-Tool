@@ -18,8 +18,9 @@ def run_image_captioning_pipeline_blip2(pptx_path: str) -> Dict[int, List[str]]:
     # Step 1: Extract images from slides
     slide_images = extract_images_from_pptx(pptx_path)
     
-    if not slide_images:
-        return {}
+    # if no images are found, return an empty dictionary
+    if not slide_images or not any(slide_images.values()):
+        return {slide_num: [] for slide_num in slide_images}
     
     # Step 2: Initialize BLIP-2 captioning model
     captioner = Blip2ImageCaptioner()
